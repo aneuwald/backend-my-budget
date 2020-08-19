@@ -7,6 +7,6 @@ app.use(express.json())
 
 const routes = require("./routes")
 app.use('/', routes)
-app.use('/manual', require("./config/m"))
+app.use('/m', require("./config/m"))
 
 module.exports = app
