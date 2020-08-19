@@ -19,7 +19,11 @@ module.exports = {
     },
 
     isNumberOrError(number, msg) {
-        if (isNaN(number)) throw msg
+        if (isNaN(number) || !number || number <= 0) throw msg
+    },
+
+    isNumberOrError(date, msg) {
+        if (isNaN(Date.parse(date))) throw msg
     },  
 
     isPercentageOrError(number, msg) {

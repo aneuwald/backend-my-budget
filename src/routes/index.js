@@ -1,5 +1,6 @@
-const categoryAPI = require('../api/categories')
-const purchaseAPI = require('../api/purchases')
+const categories = require('../api/categories')
+const purchases = require('../api/purchases')
+const relations = require('../api/relations')
 
 const routes = require('express').Router();
 
@@ -8,16 +9,22 @@ routes.route('/')
         res.status(200).send('WELCOME TO MYBUDGET API, BITCH!');
     });
 
+routes.route('/categories/purchases')
+    .get(relations.GET_CATEGORIES_COMPLETE)
+
+routes.route('/categories/purchases/:id')
+    .get(relations.GET_PURCHASES_BY_CATEGORY)
+
 routes.route('/categories/:id?')
-    .get(categoryAPI.GET_CATEGORY)
-    .post(categoryAPI.INSERT_CATEGORY)
-    .put(categoryAPI.UPDATE_CATEGORY)
-    .delete(categoryAPI.DELETE_CATEGORY)
+    .get(categories.GET_CATEGORY)
+    .post(categories.INSERT_CATEGORY)
+    .put(categories.UPDATE_CATEGORY)
+    .delete(categories.DELETE_CATEGORY)
 
 routes.route('/purchases/:id?')
-    .get(purchaseAPI.GET_PURCHASE)
-    .post(purchaseAPI.INSERT_PURCHASE)
-    .put(purchaseAPI.UPDATE_PURCHASE)
-    .delete(purchaseAPI.DELETE_PURCHASE)
+    .get(purchases.GET_PURCHASE)
+    .post(purchases.INSERT_PURCHASE)
+    .put(purchases.UPDATE_PURCHASE)
+    .delete(purchases.DELETE_PURCHASE)
 
 module.exports = routes;

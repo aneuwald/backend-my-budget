@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Category = mongoose.model('Category')
 
 const {
-    isObjectIdOrError,
     existOrError,
-    isPercentageOrError
+    isPercentageOrError,
+    isObjectIdOrError
 } = require('../config/validation')
 
 const GET_CATEGORY = async (req, res) => {
