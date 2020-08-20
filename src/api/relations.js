@@ -26,7 +26,7 @@ const GET_CATEGORIES_COMPLETE = async (req, res) => {
     const categories = await Category.find().lean()
     for (i in categories) {
         const purchases = await Purchase.find({ category: categories[i]._id }, '-category').lean()
-        const total = purchases.reduce((a, b) => a.price + b.price, 0) || 0
+        const total = purchases.reduce((total, el) => (total + el.price), 0)
         c.push({ ...categories[i], total, purchases })
     }
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Category = mongoose.model('Category')
+const Purchase = mongoose.model('Purchase')
 
 const {
     existOrError,
@@ -22,7 +23,15 @@ const GET_CATEGORY = async (req, res) => {
             .catch(e => res.send({}))
     else
         Category.find().lean()
-            .then(c => res.send(c))
+            .then(async categories => {
+                const c = []
+                for (i in categories) {
+                    const purchases = await Purchase.find({ category: categories[i]._id }, 'price').lean()
+                    const total = purchases.reduce((total, el) => (total + el.price), 0)
+                    c.push({ ...categories[i], total })
+                }
+                return res.send(c)
+            })
             .catch(e => res.send([]))
 }
 
