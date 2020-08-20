@@ -1,6 +1,9 @@
 const categories = require('../api/categories')
 const purchases = require('../api/purchases')
 const relations = require('../api/relations')
+const authenticate = require('../config/passport')
+
+const auth = require('../config/auth')
 
 const routes = require('express').Router();
 
@@ -8,6 +11,10 @@ routes.route('/')
     .get((req, res) => {
         res.status(200).send('WELCOME TO MYBUDGET API!');
     });
+
+routes.route('/login')
+    .get(authenticate(), (req, res) => res.send('Você está autenticado, parabéns!'))
+    .post(auth.LOGIN)
 
 routes.route('/categories/purchases')
     .get(relations.GET_CATEGORIES_COMPLETE)

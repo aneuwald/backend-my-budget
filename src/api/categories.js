@@ -24,7 +24,6 @@ const GET_CATEGORY = async (req, res) => {
         Category.find().lean()
             .then(c => res.send(c))
             .catch(e => res.send([]))
-
 }
 
 const INSERT_CATEGORY = async (req, res) => {

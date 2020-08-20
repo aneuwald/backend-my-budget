@@ -12,5 +12,4 @@ const PurchaseSchema = new mongoose.Schema({
     }
 })
 
-
 mongoose.model("Purchase", PurchaseSchema)

@@ -24,9 +24,13 @@
   },
   "homepage": "https://github.com/aneuwald/backend-my-budget#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "googleapis": "^59.0.0",
-    "mongoose": "^5.10.0"
+    "jwt-simple": "^0.5.6",
+    "mongoose": "^5.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   }
 }

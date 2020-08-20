@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 
 require('./config/db')
+require('./config/passport')
 
 app.use(express.json())
 
