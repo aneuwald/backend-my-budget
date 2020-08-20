@@ -6,7 +6,7 @@ const routes = require('express').Router();
 
 routes.route('/')
     .get((req, res) => {
-        res.status(200).send('WELCOME TO MYBUDGET API, BITCH!');
+        res.status(200).send('WELCOME TO MYBUDGET API!');
     });
 
 routes.route('/categories/purchases')
