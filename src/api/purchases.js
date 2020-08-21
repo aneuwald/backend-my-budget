@@ -34,14 +34,14 @@ const INSERT_PURCHASE = async (req, res) => {
         existOrError(name, 'Por favor, informe o nome da compra categoria!')
         isNumberOrError(price, 'O preço deve ser um número maior que 0!')
         isObjectIdOrError(category, 'ID da categoria não parece ser ObjectID válido!')
-        //existOrError(date, 'Por favor, informe a data da compra!')
+        existOrError(date, 'Por favor, informe a data da compra!')
         existOrError(await Category.countDocuments({ _id: category }), 'Esse ID não parece ser de nenhuma categoria cadastrada!')
     } catch (msg) {
         return res.status(400).send(msg)
     }
 
     Purchase
-        .create({ name, price, description, date: Date.now(), category })
+        .create({ name, price, description, date, category })
         .then(() => res.send(`Compra ${name} adicionada!`))
         .catch(e => {
             console.log(e)
