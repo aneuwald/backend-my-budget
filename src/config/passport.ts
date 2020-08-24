@@ -6,7 +6,7 @@ import { User } from '../models'
 const passport = new Passport()
 
 const params = {
-  secretOrKey: process.env.AUTH_SECRET,
+  secretOrKey: process.env.URL_MONGODB as string,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }
 

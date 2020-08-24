@@ -1,8 +1,13 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Document } from 'mongoose'
+
+interface ICategory extends Document {
+  name: string,
+  percentage: number
+}
 
 const CategorySchema = new Schema({
   name: { type: String, required: true, unique: true },
-  percentage: { type: Number }
+  percentage: { type: Number, required: true }
 })
 
-export default model('Category', CategorySchema)
+export default model<ICategory>('Category', CategorySchema)

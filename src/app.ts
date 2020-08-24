@@ -1,4 +1,3 @@
-import './config/env'
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
@@ -27,7 +26,7 @@ class App {
   private database (): void {
     mongoose.set('useCreateIndex', true)
     mongoose.set('useUnifiedTopology', true)
-    mongoose.connect(process.env.URL_MONGODB, { useNewUrlParser: true })
+    mongoose.connect(process.env.URL_MONGODB as string, { useNewUrlParser: true })
       .then(() => console.log('CONECTADO COM SUCESSO AO BANCO DE DADOS!'))
       .catch(() => console.log('ERRO AO SE CONECTAR COM O BANCO DE DADOS!'))
   }

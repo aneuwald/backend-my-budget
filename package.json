@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/aneuwald/backend-my-budget#readme",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/node": "^14.6.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

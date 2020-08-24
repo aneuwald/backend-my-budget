@@ -12,7 +12,7 @@ const GET_PURCHASES_BY_CATEGORY = async (req: Request, res: Response) : Promise<
     return res.status(400).send(msg)
   }
 
-  Purchase.find({ category: id }).lean()
+  return Purchase.find({ category: id }).lean()
     .then(c => res.send(c))
     .catch(() => res.send('Algo deu errado!'))
 }

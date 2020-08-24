@@ -13,11 +13,11 @@ const GET_PURCHASE = async (req: Request, res: Response) : Promise<Response> => 
   }
 
   if (id) {
-    Purchase.findOne({ _id: id }).populate('category').lean()
+    return Purchase.findOne({ _id: id }).populate('category').lean()
       .then(c => res.send(c))
       .catch(() => res.send({}))
   } else {
-    Purchase.find().populate('category').lean()
+    return Purchase.find().populate('category').lean()
       .then(c => res.send(c))
       .catch(() => res.send([]))
   }
@@ -36,13 +36,10 @@ const INSERT_PURCHASE = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Purchase
+  return Purchase
     .create({ name, price, description, date, category })
     .then(() => res.send(`Compra ${name} adicionada!`))
-    .catch(e => {
-      console.log(e)
-      res.status(500).send('Ocorreu algum erro!')
-    })
+    .catch(e => res.status(500).send('Ocorreu algum erro!'))
 }
 
 const UPDATE_PURCHASE = async (req: Request, res: Response) : Promise<Response> => {
@@ -59,9 +56,9 @@ const UPDATE_PURCHASE = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Purchase
-    .updateOne({ _id: id }, { name, price, description, date: Date.now(), category })
-    .then(() => res.send(`Categoria ${name} atualizada!`))
+  return Purchase
+    .updateOne({ _id: id }, { name, price, description, date: Date.now() || date, category })
+    .then(() => res.send(`Compra ${name} atualizada!`))
     .catch(() => res.status(500).send('Ocorreu algum erro!'))
 }
 
@@ -74,7 +71,7 @@ const DELETE_PURCHASE = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Purchase
+  return Purchase
     .deleteOne({ _id: id })
     .then(() => res.send(`Compra ${id} deletada!!`))
     .catch(() => res.status(500).send('Ocorreu algum erro!'))

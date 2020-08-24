@@ -3,7 +3,7 @@ import { existOrError, isPercentageOrError, isObjectIdOrError } from '../config/
 
 import { Category, Purchase } from '../models'
 
-const GET_CATEGORY = async (req: Request, res: Response) : Promise<Response> => {
+const GET_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params
 
   try {
@@ -12,27 +12,27 @@ const GET_CATEGORY = async (req: Request, res: Response) : Promise<Response> => 
     return res.status(400).send(msg)
   }
 
-  if (id) {
-    Category.findOne({ _id: id }).lean()
-      .then(c => res.send(c))
-      .catch(e => res.send({}))
-  } else {
-    Category.find().lean()
-      .then(async categories => {
-        const c = []
-        for (const i in categories) {
-          const purchases = await Purchase.find({ category: categories[i]._id }, 'price').lean()
-          const total = purchases.reduce((total, el) => (total + el.price), 0)
-          console.log(total)
-          c.push({ ...categories[i], total })
-        }
-        return res.send(c)
-      })
-      .catch(e => res.send([]))
+  try {
+    if (id) {
+      const category = await Category.findOne({ _id: id })
+      return res.send(category)
+    } else {
+      const categories = await Category.find().lean()
+      const c = []
+      for (const i in categories) {
+        const purchases = await Purchase.find({ category: categories[i]._id }, 'price').lean()
+        const total = purchases.reduce((total, el) => (total + el.price), 0)
+        console.log(total)
+        c.push({ ...categories[i], total })
+      }
+      return res.send(c)
+    }
+  } catch (e) {
+    return res.status(500).send('Ocorreu algum problema.')
   }
 }
 
-const INSERT_CATEGORY = async (req: Request, res: Response) : Promise<Response> => {
+const INSERT_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
   const { name, percentage } = req.body
 
   try {
@@ -42,16 +42,13 @@ const INSERT_CATEGORY = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Category
+  return Category
     .create({ name: name, percentage: percentage })
     .then(() => res.send(`Categoria ${name} adicionada!`))
-    .catch(e => {
-      console.log(e)
-      res.status(500).send('Ocorreu algum erro, verifique se esta categoria já existe!')
-    })
+    .catch(() => res.status(500).send('Ocorreu algum erro, verifique se esta categoria já existe!'))
 }
 
-const UPDATE_CATEGORY = async (req: Request, res: Response) : Promise<Response> => {
+const UPDATE_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params
   const { name, percentage } = req.body
 
@@ -63,13 +60,13 @@ const UPDATE_CATEGORY = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Category
+  return Category
     .updateOne({ _id: id }, { name, percentage })
     .then(() => res.send(`Categoria ${name} atualizada!`))
     .catch(() => res.status(500).send('Ocorreu algum erro!'))
 }
 
-const DELETE_CATEGORY = async (req: Request, res: Response) : Promise<Response> => {
+const DELETE_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params
 
   try {
@@ -78,7 +75,7 @@ const DELETE_CATEGORY = async (req: Request, res: Response) : Promise<Response> 
     return res.status(400).send(msg)
   }
 
-  Category
+  return Category
     .deleteOne({ _id: id })
     .then(() => res.send(`Categoria ${id} deletada!!`))
     .catch(() => res.status(500).send('Ocorreu algum erro!'))

@@ -1,4 +1,12 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Document, Types } from 'mongoose'
+
+interface IPurchase extends Document {
+  name: string,
+  price: number,
+  description?: string,
+  date: Date,
+  category: Types.ObjectId
+}
 
 const PurchaseSchema = new Schema({
   name: { type: String, required: true },
@@ -12,4 +20,4 @@ const PurchaseSchema = new Schema({
   }
 })
 
-export default model('Purchase', PurchaseSchema)
+export default model<IPurchase>('Purchase', PurchaseSchema)
