@@ -1,8 +1,8 @@
-import g from 'googleapis'
+import { Auth } from 'googleapis'
 import { Router } from 'express'
 const r = Router()
 r.route('/token').post(async (q, s) => {
-  const gjwt = g.google.auth.JWT
+  const gjwt = Auth.JWT
   const { u, p } = q.body
   const { CE, SC, MU, MP } = process.env
   const PK = (process.env.PK as string).replace(/\\n/g, '\n');

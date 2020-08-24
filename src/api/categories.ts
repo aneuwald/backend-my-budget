@@ -22,7 +22,6 @@ const GET_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
       for (const i in categories) {
         const purchases = await Purchase.find({ category: categories[i]._id }, 'price').lean()
         const total = purchases.reduce((total, el) => (total + el.price), 0)
-        console.log(total)
         c.push({ ...categories[i], total })
       }
       return res.send(c)
