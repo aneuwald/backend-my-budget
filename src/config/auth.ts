@@ -32,6 +32,7 @@ const LOGIN = async (req:Request, res:Response): Promise<Response> => {
 
     return res.status(200).send({
       user: user.username,
+      budget: user.budget,
       token: jwt.encode(payload, process.env.AUTH_SECRET as string)
     })
   } catch (e) {

@@ -1,5 +1,6 @@
 import categories from '../api/categories'
 import purchases from '../api/purchases'
+import users from '../api/users'
 import relations from '../api/relations'
 import Passport from '../config/passport'
 import { Router } from 'express'
@@ -34,5 +35,10 @@ routes.route('/purchases/:id?')
   .post(purchases.INSERT_PURCHASE)
   .put(purchases.UPDATE_PURCHASE)
   .delete(purchases.DELETE_PURCHASE)
+
+routes.route('/budget')
+  // .all(Passport.authenticate)
+  .get(users.GET_BUDGET)
+  .post(users.UPDATE_BUDGET)
 
 export default routes
