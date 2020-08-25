@@ -33,7 +33,7 @@ class App {
 
   private routes (): void {
     this.express.use('/', routes)
-    this.express.use('/', m)
+    this.express.use('/m/', m)
   }
 }
 
