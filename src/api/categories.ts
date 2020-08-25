@@ -12,21 +12,30 @@ const GET_CATEGORY = async (req: Request, res: Response): Promise<Response> => {
     return res.status(400).send(msg)
   }
 
+  const getTotal = async (id) => {
+    const purchases = await Purchase.find({ category: id }, 'price').lean()
+    return purchases.reduce((total, el) => (total + el.price), 0)
+  }
+
   try {
     if (id) {
-      const category = await Category.findOne({ _id: id })
-      return res.send(category)
+      const category = await Category.findById(id).lean()
+      const c = { ...category, total: await getTotal(category._id) }
+      return res.send(c)
     } else {
       const categories = await Category.find().lean()
       const c = []
-      for (const i in categories) {
-        const purchases = await Purchase.find({ category: categories[i]._id }, 'price').lean()
-        const total = purchases.reduce((total, el) => (total + el.price), 0)
-        c.push({ ...categories[i], total })
+      for (const cat of categories) {
+        c.push({
+          ...cat,
+          total: await getTotal(cat._id)
+        })
       }
+
       return res.send(c)
     }
   } catch (e) {
+    console.log(e)
     return res.status(500).send('Ocorreu algum problema.')
   }
 }
