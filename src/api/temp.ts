@@ -8,7 +8,7 @@ const GET_TEMPS = async (req: Request, res: Response): Promise<Response> => {
 }
 
 const INSERT_TEMP = async (req: Request, res: Response): Promise<Response> => {
-  const { temp, umid } = req.query
+  const { temp, umid } = req.body
 
   return Temp.create({ temp, umid })
     .then(c => res.send(c))
