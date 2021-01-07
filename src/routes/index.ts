@@ -2,6 +2,7 @@ import categories from '../api/categories'
 import purchases from '../api/purchases'
 import users from '../api/users'
 import relations from '../api/relations'
+import temp from '../api/temp'
 import Passport from '../config/passport'
 import { Router } from 'express'
 
@@ -35,6 +36,10 @@ routes.route('/purchases/:id?')
   .post(purchases.INSERT_PURCHASE)
   .put(purchases.UPDATE_PURCHASE)
   .delete(purchases.DELETE_PURCHASE)
+
+routes.route('/temp')
+  .get(temp.GET_TEMPS)
+  .post(temp.INSERT_TEMP)
 
 routes.route('/budget')
   // .all(Passport.authenticate)
